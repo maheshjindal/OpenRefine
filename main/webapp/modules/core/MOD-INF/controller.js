@@ -91,8 +91,6 @@ function registerCommands() {
   RS.registerCommand(module, "cancel-processes", new Packages.org.openrefine.commands.history.CancelProcessesCommand());
 
   RS.registerCommand(module, "compute-facets", new Packages.org.openrefine.commands.browsing.ComputeFacetsCommand());
-  RS.registerCommand(module, "compute-clusters", new Packages.org.openrefine.commands.browsing.ComputeClustersCommand());
-  RS.registerCommand(module, "get-clustering-functions-and-distances", new Packages.org.openrefine.commands.browsing.GetClusteringFunctionsAndDistancesCommand());
 
   RS.registerCommand(module, "edit-one-cell", new Packages.org.openrefine.commands.cell.EditOneCellCommand());
   RS.registerCommand(module, "text-transform", new Packages.org.openrefine.commands.cell.TextTransformCommand());
@@ -107,9 +105,10 @@ function registerCommands() {
 
   RS.registerCommand(module, "get-languages", Packages.org.openrefine.commands.lang.GetLanguagesCommand());
   RS.registerCommand(module, "load-language", Packages.org.openrefine.commands.lang.LoadLanguageCommand());
-  
+
   RS.registerCommand(module, "add-column", new Packages.org.openrefine.commands.column.AddColumnCommand());
   RS.registerCommand(module, "add-column-by-fetching-urls", new Packages.org.openrefine.commands.column.AddColumnByFetchingURLsCommand());
+
   RS.registerCommand(module, "remove-column", new Packages.org.openrefine.commands.column.RemoveColumnCommand());
   RS.registerCommand(module, "rename-column", new Packages.org.openrefine.commands.column.RenameColumnCommand());
   RS.registerCommand(module, "move-column", new Packages.org.openrefine.commands.column.MoveColumnCommand());
@@ -159,7 +158,6 @@ function registerOperations() {
 
   OR.registerOperation(module.getName(), "text-transform", Packages.org.openrefine.operations.cell.TextTransformOperation);
   OR.registerOperation(module.getName(), "mass-edit", Packages.org.openrefine.operations.cell.MassEditOperation);
-
   OR.registerOperation(module.getName(), "multivalued-cell-join", Packages.org.openrefine.operations.cell.MultiValuedCellJoinOperation);
   OR.registerOperation(module.getName(), "multivalued-cell-split", Packages.org.openrefine.operations.cell.MultiValuedCellSplitOperation);
   OR.registerOperation(module.getName(), "fill-down", Packages.org.openrefine.operations.cell.FillDownOperation);
@@ -175,7 +173,6 @@ function registerOperations() {
   OR.registerOperation(module.getName(), "column-split", Packages.org.openrefine.operations.column.ColumnSplitOperation);
   OR.registerOperation(module.getName(), "column-addition-by-fetching-urls", Packages.org.openrefine.operations.column.ColumnAdditionByFetchingURLsOperation);
   OR.registerOperation(module.getName(), "column-reorder", Packages.org.openrefine.operations.column.ColumnReorderOperation);
-
   OR.registerOperation(module.getName(), "row-removal", Packages.org.openrefine.operations.row.RowRemovalOperation);
   OR.registerOperation(module.getName(), "row-star", Packages.org.openrefine.operations.row.RowStarOperation);
   OR.registerOperation(module.getName(), "row-flag", Packages.org.openrefine.operations.row.RowFlagOperation);
@@ -205,32 +202,10 @@ function registerImporting() {
    */
 
   FR.registerFormat("text", "Text files"); // generic format, no parser to handle it
-  FR.registerFormat("text/line-based", "Line-based text files", "LineBasedParserUI",
-      new Packages.org.openrefine.importers.LineBasedImporter());
   FR.registerFormat("text/line-based/*sv", "CSV / TSV / separator-based files", "SeparatorBasedParserUI",
       new Packages.org.openrefine.importers.SeparatorBasedImporter(runner));
   FR.registerFormat("text/line-based/fixed-width", "Fixed-width field text files", "FixedWidthParserUI",
       new Packages.org.openrefine.importers.FixedWidthImporter(runner));
-
-  FR.registerFormat("text/rdf/nt", "RDF/N-Triples files", "RdfTriplesParserUI", 
-              new Packages.org.openrefine.importers.RdfTripleImporter(runner, Packages.org.openrefine.importers.RdfTripleImporter.Mode.NT));
-  FR.registerFormat("text/rdf/n3", "RDF/N3 files", "RdfTriplesParserUI", 
-          new Packages.org.openrefine.importers.RdfTripleImporter(runner, Packages.org.openrefine.importers.RdfTripleImporter.Mode.N3));
-  FR.registerFormat("text/rdf/ttl", "RDF/Turtle files", "RdfTriplesParserUI", 
-                  new Packages.org.openrefine.importers.RdfTripleImporter(runner, Packages.org.openrefine.importers.RdfTripleImporter.Mode.TTL));
-  FR.registerFormat("text/rdf/xml", "RDF/XML files", "RdfTriplesParserUI", new Packages.org.openrefine.importers.RdfXmlTripleImporter(runner));
-  FR.registerFormat("text/rdf/ld+json", "JSON-LD files", "RdfTriplesParserUI", new Packages.org.openrefine.importers.RdfJsonldTripleImporter(runner));
-
-  FR.registerFormat("text/xml", "XML files", "XmlParserUI", new Packages.org.openrefine.importers.XmlImporter(runner));
-  FR.registerFormat("binary/text/xml/xls/xlsx", "Excel files", "ExcelParserUI", new Packages.org.openrefine.importers.ExcelImporter(runner));
-  FR.registerFormat("text/xml/ods", "Open Document Format spreadsheets (.ods)", "ExcelParserUI", new Packages.org.openrefine.importers.OdsImporter(runner));
-  FR.registerFormat("text/json", "JSON files", "JsonParserUI", new Packages.org.openrefine.importers.JsonImporter(runner));
-  FR.registerFormat("text/marc", "MARC files", "XmlParserUI", new Packages.org.openrefine.importers.MarcImporter(runner));
-  FR.registerFormat("text/wiki", "Wikitext", "WikitextParserUI", new Packages.org.openrefine.importers.WikitextImporter(runner));
-
-  FR.registerFormat("binary", "Binary files"); // generic format, no parser to handle it
-
-  FR.registerFormat("service", "Services"); // generic format, no parser to handle it
 
   /*
    *  Extension to format mappings
@@ -298,7 +273,6 @@ function registerImporting() {
    *  look at the actual files' content, and try to guess a better format.
    */
   FR.registerFormatGuesser("text", new Packages.org.openrefine.importers.TextFormatGuesser());
-  FR.registerFormatGuesser("text/line-based", new Packages.org.openrefine.importers.LineBasedFormatGuesser());
 
   /*
    *  Controllers: these implement high-level UI flows for importing data. For example, the default
@@ -329,10 +303,6 @@ function registerFacets() {
 }
 
 function registerDistances() {
-   var DF = Packages.org.openrefine.clustering.knn.DistanceFactory;
-   var VicinoDistance = Packages.org.openrefine.clustering.knn.VicinoDistance;
-   DF.put("levenshtein", new VicinoDistance(new Packages.edu.mit.simile.vicino.distances.LevenshteinDistance()));
-   DF.put("ppm", new VicinoDistance(new Packages.edu.mit.simile.vicino.distances.PPMDistance()));
         
    // Distances not activated as they are not very useful:
    // See https://github.com/OpenRefine/OpenRefine/pull/1906
@@ -347,8 +317,6 @@ function registerDistances() {
 }
 
 function registerClusterers() {
-   var CCF = Packages.org.openrefine.clustering.ClustererConfigFactory;
-   CCF.register("knn", Packages.org.openrefine.clustering.knn.kNNClusterer.kNNClustererConfig);
    // Binning clusterer: already registered by default.
 }
 

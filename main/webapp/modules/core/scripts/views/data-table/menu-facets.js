@@ -138,7 +138,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
           }
         },
         {},
-        {
+/*        {
           id: "core/duplicates-facet",
           label: $.i18n('core-views/duplicates-facet'),
           click: function() {
@@ -152,7 +152,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
                 }
             );
           }
-        },
+        }, 
         {},
         {
           id: "core/numeric-log-facet",
@@ -230,7 +230,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
             );
           }
         },
-        {},
+        {}, */
         {
           id: "core/error-facet",
           label: $.i18n('core-views/facet-error'),
@@ -290,7 +290,7 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
       ]
     }
   ]);
-
+/*
   MenuSystem.insertAfter(menu, [ "core/facet" ], [
     {
       label: $.i18n('core-views/text-filter'),
@@ -307,4 +307,5 @@ DataTableColumnHeaderUI.extendMenu(function(column, columnHeaderUI, menu) {
       }
     }
   ]);
+*/
 });
